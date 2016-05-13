@@ -1,0 +1,433 @@
+20160511
+paprasta programa:
+class Square
+  attr_accessor :number
+
+  def initialize(number)
+    @number = number
+  end
+
+  def get_square
+    number ** 2
+    end
+
+    end
+
+testavimo programa:
+require "test/unit"
+require "./kvadratu.rb"
+
+class TestSquare < Test::Unit::TestCase
+
+  def test_square
+    square  = Square.new(5)
+    assert_equal(25, square.get_square)
+  end
+
+end
+
+___________________________
+class Square
+  attr_accessor :number
+
+  def initialize(number)
+    @number = number
+  end
+
+  def get_square
+    number ** 2
+    end
+
+  def get_double_square
+    get_square ** 2
+  end
+
+def triple_square
+  get_double_square ** 2
+end
+
+
+end
+
+testavimas:
+require "test/unit"
+require "./kvadratu.rb"
+
+class TestSquare < Test::Unit::TestCase
+
+  def test_square
+    square  = Square.new(5)
+    assert_equal(25, square.get_square)
+  end
+
+def test_double_square
+  assert_equal(625, Square.new(5).get_double_square)
+end
+
+def test_triple_square
+  assert_respond_to(Square.new(5), :triple_square)
+  assert_equal(625 ** 2, Square.new(5).triple_square)
+end
+
+end
+
+______________________________________
+
+trikampis:
+class Triangle
+
+attr_accessor :a, :b, :c
+#  a = gets.chomp
+#  c = gets.chomp
+  def initialize(a,b,c)
+    @a = a  #gets.chomp
+    @b = b  #gets.chomp
+    @c = c  #gets.chomp
+  end
+
+  def valid?
+    a,b,c, = [@a, @b, @c].sort
+    (a <= 0 || a + b <= c) ? false : true
+  end
+
+end
+
+t = Triangle.new(gets.chomp.to_i, gets.chomp.to_i, gets.chomp.to_i)
+puts "Ar validus: #{t.valid?}"
+
+testavimas:
+require "test/unit"
+require "./trikampis"
+
+class TestTriangle < Test::Unit::TestCase
+
+    def test_valid
+      triangle = Triangle.new(1,2,2)
+      assert_equal(true, triangle.valid?)
+    end
+
+    def test_not_valid
+      triangle = Triangle.new(1,2,20)
+      assert_equal(false, triangle.valid?)
+    end
+
+    def ived_tesingas
+      triangle = Triangle.new(@a,@b,@c)
+      assert_equal(true, triangle.ived?)
+    end
+
+end
+_________________________________________________
+
+su perimetru ir plotu:
+class Triangle
+
+attr_accessor :a, :b, :c
+
+  def initialize(a,b,c)
+    @a = a  #gets.chomp
+    @b = b  #gets.chomp
+    @c = c  #gets.chomp
+  end
+  
+  def valid?
+    a,b,c, = [@a, @b, @c].sort
+    (a <= 0 || a + b <= c) ? false : true
+  end
+
+#t = Triangle.new(gets.chomp.to_i, gets.chomp.to_i, gets.chomp.to_i)
+#puts "Ar validus: #{t.valid?}"
+
+  def perimeter
+    a + b + c
+  end
+
+  def area
+  s = perimeter.to_f / 2
+  Math.sqrt(s * (s - a) * (s - b) * (s -c))
+  end
+
+TESTAVIMAS:
+require "test/unit"
+require "./trikampis"
+
+class TestTriangle < Test::Unit::TestCase
+
+    def test_valid
+      triangle = Triangle.new(1,2,2)
+      assert_equal(true, triangle.valid?)
+    end
+
+    def test_not_valid
+      triangle = Triangle.new(1,2,20)
+      assert_equal(false, triangle.valid?)
+    end
+
+    def test_perimeter
+      triangle = Triangle.new(1,2,2)
+      assert_equal(5, triangle.perimeter)
+    end
+
+    def test_area
+      triangle = Triangle.new(3,4,6)
+      assert_equal(5.33, triangle.area.round(2))
+    end
+
+end
+
+____________________________________________
+heroniuan trikampis:
+#	Jei trikrampio krastines, perimetras ir plotas yra sveikieji skaiciai - tai trikampis heronian
+#	a) Atsako ar trikampis heronian
+#	b) Suranda visus trikampius iki n < 1000 (krastines ilgis)
+#	c) Nupiesia trikampi consoleje
+
+require './trikampis'
+
+class TriangleHeronian < Triangle
+
+	def valid?
+		super && is_integer?(area)
+	end
+
+	def is_integer?(number)
+		number == number.to_i
+	end
+
+end
+
+TESTAVIMAS
+require "test/unit"
+require "./trikampis"
+require "./heronian.rb"
+
+class TestTriangle < Test::Unit::TestCase
+
+    def test_valid
+      triangle = Triangle.new(1,2,2)
+      assert_equal(true, triangle.valid?)
+    end
+
+    def test_not_valid
+      triangle = Triangle.new(1,2,20)
+      assert_equal(false, triangle.valid?)
+    end
+
+    def test_perimeter
+      triangle = Triangle.new(1,2,2)
+      assert_equal(5, triangle.perimeter)
+    end
+
+    def test_area
+      triangle = Triangle.new(3,4,6)
+      assert_equal(5.33, triangle.area.round(2))
+    end
+
+    def test_valid_heronian
+      triangle = TriangleHeronian.new(3,4,5)
+      assert_equal(true, triangle.valid?)
+    end
+
+end
+
+_______________________________________________
+20160513
+multipikator:
+class Multiplier
+attr_accessor :numbers
+  def initialize(numbers)
+    @numbers = numbers
+  end
+
+  def multiply
+    #puts "Iveskite #{{numbers}} skaiciu"
+    #numbers_from_input = []
+    #gets.chomp.to_i.times do
+    #  number = gets.chomp.to_i
+    #  numbers_from_input << number
+    #end
+    sandauga = 1
+    numbers.each do |number|
+    sandauga *= number
+    end
+    sandauga
+    end
+end
+
+
+
+#numbers_from_input = []
+#gets.chomp.to_i.times do
+#  number = gets.chomp.to_i
+ #numbers_from_input << number
+#end
+
+#puts Numbers.new(numbers_from_input).sandauga
+
+test:
+require "./trecia_programa.rb"
+require "test/unit"
+
+class TestMultiply < Test::Unit::TestCase
+  def test_multiply
+    numbers = [4, 3, 2]
+    mult = Multiplier.new(numbers)
+    assert_equal(24, mult.multiply)
+  end
+end
+
+_____________________________________________
+
+#Ávedame n - skaièiø, kiek sekanèiø skaièiø ávedinësime.
+#Atspausdiname visø skaièiu sandaugà. (while)
+class Numbers
+
+  def initialize(numbers)
+    @numbers = numbers
+    @n = n
+  end
+
+  def read_numbers
+    sandauga = 1
+    n.times do
+      input = gets.chomp.to_i
+      sandauga = input * sandauga
+
+    end
+    sandauga
+  end
+end
+
+puts Numbers.new(gets.chomp.to_i).read_numbers
+
+TEST:
+NIL
+
+__________________________________________
+maths:
+class  Math1
+
+  attr_accessor :a, :b
+
+  def initialize(a, b)
+    @a = a
+    @b =  b
+  end
+
+  def number_sum
+    a + b
+  end
+
+  def sandauga
+    a * b
+  end
+
+  def laipsnis
+     a ** b
+   end
+
+end
+
+TEST:
+require "./pirma_programa.rb"
+require "test/unit"
+
+class Math1Test < Test::Unit::TestCase
+  def test_sum
+    suma = Math1.new(2, 3)
+    assert_equal(5, suma.number_sum)
+  end
+
+  def test_sandauga
+    daugyba = Math1.new(2, 3)
+    assert_equal(6, daugyba.sandauga)
+  end
+
+  def test_power
+    laipsniu = Math1.new(2, 3)
+    assert_equal(8, laipsniu.laipsnis)
+  end
+
+end
+_______________________________________
+vardai
+#Ávedame vardà ir pavardæ.
+#Atspausdiname pasveikimà pagal vardà ir pavardæ.
+
+class Greeting
+
+  attr_accessor :vardas, :pavarde
+
+  def initialize(vardas, pavarde)
+    @vardas = vardas
+    @pavarde = pavarde
+  end
+
+  def greet
+    vardai = ["Azuolas", "Jonas", "Mykolas", "Petras", "Vytas"]
+    if vardai.include?(@vardas)
+      "Sveikinu #{@vardas}"
+    else
+      "Iveskite kita varda"
+    end
+  end
+
+end
+
+# vardas = gets.chomp
+# pavarde = gets.chomp
+# puts Greeting.new(vardas, pavarde).greet
+
+TEST:
+require "./ketvirta_programa.rb"
+require "test/unit"
+
+class TestGreeting < Test::Unit::TestCase
+  def test_greet
+    sveik = Greeting.new("Jonas", "KOL")
+    assert_equal("Sveikinu Jonas", sveik.greet)
+  end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,9 +2,8 @@
 #Atspausdiname visų skaičiu sandaugą. (while)
 class Numbers
 
-  attr_accessor :n
-
-  def initialize (n)
+  def initialize(numbers)
+    @numbers = numbers
     @n = n
   end
 
